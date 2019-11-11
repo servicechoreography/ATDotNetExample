@@ -13,14 +13,16 @@ RUN dotnet tool install --global dotnet-sonarscanner --version 4.6.2
 RUN apk update && apk add openjdk8-jre
 RUN dotnet sonarscanner begin /k:"atdotnetexample" /n:"atdotnetexample" /v:"1.0.0" \
     /d:sonar.host.url=http://sonarqube.5c5fed11f2ce459c949c.eastus.aksapp.io \
-    /d:sonar.cs.opencover.reportsPaths="/**/opencover.xml" \ 
+    /d:sonar.language="cs" \
+    /d:sonar.cs.opencover.reportsPaths="/**/opencover.xml" \
+    /d:sonar.user=3c5673d8efd2b1a63f306a0c79cd7974757521e9 \
     /d:sonar.coverage.exclusions="*Startup.cs,*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
     /d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
 RUN dotnet build atdotnetexample.sln -c debug --no-restore
 RUN dotnet test atdotnetexample.sln -c debug --no-restore --logger trx /p:CollectCoverage=true \
     -p:Exclude="[xunit*]*" /p:CoverletOutputFormat=opencover /p:CoverletOutput="TestResults/opencover.xml"
 
-RUN dotnet sonarscanner end
+RUN dotnet sonarscanner end /d:user.login=3c5673d8efd2b1a63f306a0c79cd7974757521e9
 
 # Copy everything else and build
 COPY . ./
