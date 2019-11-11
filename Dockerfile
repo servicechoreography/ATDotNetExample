@@ -17,7 +17,7 @@ RUN dotnet sonarscanner begin /k:"atdotnetexample" /n:"atdotnetexample" /v:"1.0.
     /d:sonar.coverage.exclusions="*Startup.cs,*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
     /d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
 RUN dotnet build atdotnetexample.sln -c debug --no-restore
-RUN dotnet test atdotnetexamplesln -c debug --no-restore --logger trx /p:CollectCoverage=true \
+RUN dotnet test atdotnetexample.sln -c debug --no-restore --logger trx /p:CollectCoverage=true \
     -p:Exclude="[xunit*]*" /p:CoverletOutputFormat=opencover /p:CoverletOutput="TestResults/opencover.xml"
 
 RUN dotnet sonarscanner end
