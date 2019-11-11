@@ -1,5 +1,5 @@
 # Comment out FROM microsoft/dotnet:sdk AS build-env
-FROM microsoft/dotnet/core/sdk:2.2-alpine3.9 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-alpine3.9 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
